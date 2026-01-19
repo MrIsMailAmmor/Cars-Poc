@@ -15,12 +15,32 @@ datasource db {
 
 
 model Car {
-  id          Int      @id @default(autoincrement())
-  name        String
-  price       Int
-  description String?  @default("Premium quality vehicle, inspected and ready for the road.")
-  image       String   @default("https://images.unsplash.com/photo-1503376780353-7e6692767b70")
-  status      String   @default("AVAILABLE")
-  isFeatured  Boolean  @default(false)
-  year        Int      @default(2024)
+  id            Int      @id @default(autoincrement())
+  name          String
+  brand         String   @default("Generic") // e.g., BMW, Audi
+  modelYear     Int      @default(2024)
+  price         Int
+  
+  // Technical Specs
+  engine        String?  // e.g., 3.0L V6 Turbo
+  horsepower    Int?     // e.g., 340
+  transmission  String   @default("Automatic") // Automatic, Manual, Dual-Clutch
+  fuelType      String   @default("Petrol")    // Petrol, Diesel, Electric, Hybrid
+  mileage       Int      @default(0)
+  drivetrain    String   @default("RWD")       // AWD, RWD, FWD
+  
+  // Appearance
+  exteriorColor String   @default("Black")
+  interiorColor String   @default("Black Leather")
+  
+  // Content
+  description   String?  @db.Text
+  image         String   // Main Image
+  gallery       String[] // Array of strings for our "Amazon Gallery"
+  
+  // Status & Logic
+  status        String   @default("AVAILABLE") // AVAILABLE, RESERVED, SOLD
+  isFeatured    Boolean  @default(false)
+  vin           String?  @unique
+  createdAt     DateTime @default(now())
 }
