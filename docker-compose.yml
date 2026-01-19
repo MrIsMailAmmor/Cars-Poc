@@ -9,7 +9,12 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    command: sh -c "yarn install && yarn prisma generate && yarn prisma db push && yarn dev --host 0.0.0.0"
+    command: >
+      sh -c "yarn install && 
+             yarn prisma generate && 
+             yarn prisma db push && 
+             npx tsx prisma/seed.ts && 
+             yarn dev --host 0.0.0.0"
     depends_on:
       - db
     

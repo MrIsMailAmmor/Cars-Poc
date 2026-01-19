@@ -62,7 +62,8 @@ async function main() {
       interiorColor: "Valcona Leather",
       description:
         "The ultimate wagon. Space for the whole family and enough power to embarrass most supercars.",
-      image: "https://images.unsplash.com/photo-1606148664166-7967a44a0363",
+      image:
+        "https://images.pexels.com/photos/13446948/pexels-photo-13446948.jpeg",
       status: "AVAILABLE",
       isFeatured: false,
     },
@@ -81,7 +82,8 @@ async function main() {
       interiorColor: "Red Nappa Leather",
       description:
         "The G-Wagon is an icon of status and capability. Rugged military roots meet modern luxury.",
-      image: "https://images.unsplash.com/photo-1520050206274-a1af4463a8ec",
+      image:
+        "https://images.pexels.com/photos/13498965/pexels-photo-13498965.jpeg",
       status: "AVAILABLE",
       isFeatured: true,
     },
@@ -100,7 +102,8 @@ async function main() {
       interiorColor: "White Synthetic Leather",
       description:
         "0-60 in 1.99 seconds. The fastest accelerating car in production today with full self-driving capability.",
-      image: "https://images.unsplash.com/photo-1617788131775-ceb2127bb0c8",
+      image:
+        "https://images.pexels.com/photos/13575248/pexels-photo-13575248.jpeg",
       status: "AVAILABLE",
       isFeatured: false,
     },
@@ -195,7 +198,8 @@ async function main() {
       interiorColor: "Ice Grey Leather",
       description:
         "Italian style with a glass roof that disappears in seconds. A masterpiece of aero-design and wind-sculpted curves.",
-      image: "https://images.unsplash.com/photo-1632243209540-35079a40733d",
+      image:
+        "https://images.pexels.com/photos/33987626/pexels-photo-33987626.jpeg",
       status: "AVAILABLE",
       isFeatured: true,
     },
