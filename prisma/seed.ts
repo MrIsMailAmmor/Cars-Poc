@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import * as dotenv from "dotenv";
 import { prisma } from "../server/utils/prisma";
 // This manually loads the .env file from the root into process.env
