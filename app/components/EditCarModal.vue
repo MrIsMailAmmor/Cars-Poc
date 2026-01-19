@@ -7,6 +7,7 @@ const emit = defineEmits(["updated"]);
 
 const form = ref(null);
 const isDeleting = ref(false);
+const uploadLoading = ref(false);
 // Deep clone the car object whenever it changes
 watch(
   () => props.car,
@@ -51,6 +52,27 @@ const handleDelete = async () => {
     emit("updated");
   } catch (e) {
     alert("Error deleting vehicle.");
+  }
+};
+
+const handleFileUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  uploadLoading.value = true;
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const data = await $fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+    form.value.image = data.url; // Set the new local URL to the car image field
+  } catch (e) {
+    alert("Upload failed");
+  } finally {
+    uploadLoading.value = false;
   }
 };
 </script>
@@ -297,6 +319,50 @@ const handleDelete = async () => {
                 v-model="form.image"
                 class="w-full p-4 bg-slate-50 rounded-2xl border-none"
               />
+            </div>
+            <div class="space-y-4">
+              <label class="text-[10px] font-bold text-slate-400 uppercase"
+                >Vehicle Photo</label
+              >
+
+              <div
+                class="relative aspect-video rounded-3xl bg-slate-50 overflow-hidden border-2 border-dashed border-slate-200 flex items-center justify-center"
+              >
+                <img
+                  v-if="form.image"
+                  :src="form.image"
+                  class="w-full h-full object-cover"
+                />
+                <div v-else class="text-slate-300 font-bold text-xs uppercase">
+                  No Image
+                </div>
+
+                <div
+                  v-if="uploadLoading"
+                  class="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center"
+                >
+                  <span class="animate-spin text-2xl">⏳</span>
+                </div>
+              </div>
+
+              <div class="flex gap-2">
+                <label
+                  class="flex-1 px-4 py-3 bg-slate-900 text-white text-center text-xs font-bold rounded-xl cursor-pointer hover:bg-orange-500 transition"
+                >
+                  Choose Local File
+                  <input
+                    type="file"
+                    @change="handleFileUpload"
+                    class="hidden"
+                    accept="image/*"
+                  />
+                </label>
+                <input
+                  v-model="form.image"
+                  placeholder="Or paste URL..."
+                  class="flex-[2] p-3 bg-slate-50 rounded-xl border-none text-xs"
+                />
+              </div>
             </div>
           </div>
 
