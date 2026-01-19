@@ -1,7 +1,8 @@
 import { readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { prisma } from "../../utils/prisma";
-import { existsSync, mkdir } from "node:fs";
+import { existsSync } from "node:fs";
+import { Car } from "@prisma/client";
 
 export default defineEventHandler(async () => {
   const uploadDir = join(process.cwd(), "public", "uploads");
@@ -24,7 +25,7 @@ export default defineEventHandler(async () => {
         const publicPath = `/uploads/${file}`;
 
         // Find which car uses this image
-        const linkedCar = cars.find((c) => c.image === publicPath);
+        const linkedCar = cars.find((c: Car) => c.image === publicPath);
 
         return {
           filename: file,

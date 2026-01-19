@@ -6,31 +6,22 @@ const { PrismaClient } = pkg;
 const { PrismaPg } = adapterPkg;
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
+  prisma: any | undefined;
 };
 
 const createPrismaClient = () => {
-  // Use the database URL from your environment variables
-  const connectionString = process.env.DATABASE_URL;
-
-  // 1. Create a standard connection pool using the pg library
-  const pool = new pg.Pool({ connectionString });
-
-  // 2. Wrap it in the Prisma Adapter for Postgres
+  const pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+  });
   const adapter = new PrismaPg(pool);
 
-  // 3. Initialize Prisma with the driver adapter
   return new PrismaClient({
     adapter,
-    // Optional: useful for debugging Railway deployment logs
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"]
-        : ["error"],
+    // Helps you see DB errors in Railway logs
+    log: ["error", "warn"],
   });
 };
 
-// Singleton pattern to prevent exhausting DB connections during hot-reloads
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
