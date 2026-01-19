@@ -5,7 +5,8 @@ services:
     volumes:
       - .:/app
       # - /var/www/uploads:/uploads
-      - /var/www/uploads:/app/public/uploads
+      # - /var/www/uploads:/app/public/uploads
+      - ./public/uploads:/app/public/uploads
     ports:
       - "3000:3000"
     env_file:
