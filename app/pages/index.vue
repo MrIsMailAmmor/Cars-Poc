@@ -1,14 +1,5 @@
-<script setup>
-// Fetch only featured cars for the "Top Deals" section
-const { data: featuredCars } = await useFetch("/api/cars", {
-  transform: (cars) =>
-    cars.filter((c) => c.isFeatured || c.price < 50000).slice(0, 3),
-});
-</script>
-
 <template>
   <div class="min-h-screen bg-slate-50 font-sans">
-
     <header
       class="relative h-[70vh] flex items-center justify-center overflow-hidden bg-slate-900"
     >
@@ -90,3 +81,11 @@ const { data: featuredCars } = await useFetch("/api/cars", {
     </section>
   </div>
 </template>
+
+<script setup>
+// Fetch only featured cars for the "Top Deals" section
+const { data: featuredCars } = await useFetch("/api/cars", {
+  transform: (cars) =>
+    cars.filter((c) => c.isFeatured || c.price < 50000).slice(0, 5),
+});
+</script>

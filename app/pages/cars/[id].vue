@@ -13,9 +13,17 @@ const images = computed(() => {
     car.value.image,
       ]
 })
-definePageMeta({
-  layout: 'default'
-})
+const specs = computed(() => ({
+  "Performance": `${car.value?.horsepower} HP`,
+  "Engine": car.value?.engine,
+  "Transmission": car.value?.transmission,
+  "Drivetrain": car.value?.drivetrain,
+  "Mileage": `${car.value?.mileage.toLocaleString()} mi`,
+  "Fuel Type": car.value?.fuelType,
+  "Exterior": car.value?.exteriorColor,
+  "Interior": car.value?.interiorColor
+}))
+
 </script>
 
 <template>
@@ -95,7 +103,16 @@ definePageMeta({
       </div>
       
       </section>
-
+<section class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-100">
+  <h2 class="text-3xl font-black mb-12 tracking-tight text-slate-900">Technical Specifications</h2>
+  
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8">
+    <div v-for="(value, label) in specs" :key="label" class="border-l-2 border-slate-100 pl-6">
+      <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">{{ label }}</p>
+      <p class="text-xl font-semibold text-slate-900">{{ value }}</p>
+    </div>
+  </div>
+</section>
   </div>
 </template>
 
