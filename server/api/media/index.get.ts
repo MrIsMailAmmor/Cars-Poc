@@ -17,7 +17,6 @@ export default defineEventHandler(async () => {
       select: { image: true, name: true },
     });
 
-    console.log(uploadDir);
     const mediaList = await Promise.all(
       files.map(async (file) => {
         const filePath = join(uploadDir, file);

@@ -6,12 +6,10 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "node-server",
-    publicAssets: [
-      {
-        baseURL: "/uploads",
-        dir: "./public/uploads",
-        maxAge: 60 * 60 * 24 * 7, // Optional: Cache images for 7 days
+    routeRules: {
+      "/uploads/**": {
+        headers: { "cache-control": "public, max-age=3600" },
       },
-    ],
+    },
   },
 });
