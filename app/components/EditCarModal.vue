@@ -6,7 +6,7 @@ const props = defineProps({
 const emit = defineEmits(["updated"]);
 
 const form = ref(null);
-
+const isDeleting = ref(false);
 // Deep clone the car object whenever it changes
 watch(
   () => props.car,
@@ -28,6 +28,29 @@ const handleSave = async () => {
     emit("updated");
   } catch (e) {
     alert("Error updating vehicle.");
+  }
+};
+// NEW: Delete Function
+const handleDelete = async () => {
+  const confirmed = window.confirm(
+    "Are you sure you want to delete this car? This action cannot be undone.",
+  );
+
+  if (!confirmed) return;
+
+  if (!isDeleting.value) {
+    isDeleting.value = true;
+    return;
+  }
+
+  try {
+    await $fetch(`/api/cars/${form.value.id}`, {
+      method: "DELETE",
+    });
+    isOpen.value = false;
+    emit("updated");
+  } catch (e) {
+    alert("Error deleting vehicle.");
   }
 };
 </script>
@@ -294,6 +317,12 @@ const handleSave = async () => {
             class="flex-1 py-5 bg-slate-900 text-white rounded-[1.5rem] font-bold hover:bg-orange-500 transition-all shadow-lg shadow-slate-100"
           >
             Apply Changes
+          </button>
+          <button
+            @click="handleDelete"
+            class="px-4 bg-red-900 text-white rounded-[1.5rem] font-bold hover:bg-orange-500 transition-all shadow-lg shadow-slate-100"
+          >
+            Delete
           </button>
           <button
             @click="isOpen = false"

@@ -105,9 +105,10 @@
 
       <button
         @click="saveCar"
-        class="mt-8 w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-slate-900 transition-all"
+        class="mt-8 w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-slate-900 transition-all disabled:opacity-50"
+        :disabled="isSubmitting"
       >
-        Add Vehicle to Catalogue
+        {{ isSubmitting ? "Processing..." : "Add Vehicle to Catalogue" }}
       </button>
     </div>
 
@@ -170,7 +171,7 @@
 </template>
 <script setup>
 const { data: cars, refresh } = await useFetch("/api/cars");
-
+const isSubmitting = ref(false);
 const form = ref({
   name: "",
   brand: "",
@@ -191,8 +192,14 @@ const form = ref({
 });
 
 const saveCar = async () => {
-  await $fetch("/api/cars", { method: "POST", body: form.value });
-  refresh();
+  isSubmitting.value = true;
+  try {
+    // ... your $fetch logic
+    await $fetch("/api/cars", { method: "POST", body: form.value });
+  } finally {
+    refresh();
+    isSubmitting.value = false;
+  }
 };
 const showEditModal = ref(false);
 const selectedCar = ref(null);
