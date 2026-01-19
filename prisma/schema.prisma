@@ -15,8 +15,12 @@ datasource db {
 
 
 model Car {
-  id     Int    @id @default(autoincrement())
-  name   String // e.g., "Tesla Model 3"
-  price  Int
-  status String @default("AVAILABLE") // AVAILABLE, SOLD, RESERVED
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Int
+  description String?  @default("Premium quality vehicle, inspected and ready for the road.")
+  image       String   @default("https://images.unsplash.com/photo-1503376780353-7e6692767b70")
+  status      String   @default("AVAILABLE")
+  isFeatured  Boolean  @default(false)
+  year        Int      @default(2024)
 }
